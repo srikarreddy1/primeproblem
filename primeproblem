@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash 
 
    echo "welcome to prime problem"
    function checkprime( ) {
@@ -39,9 +39,18 @@
    echo "${primesarray[$j]}"
    done
    }
+   #Print 50 alternate primes in reverse order
+   function print50primes( ) {
+   for (( m=99; m>=0; m=$(($m-2)) ))
+   do
+   echo "${primesarray[$m]}"
+   done
+   }
    function main( ) {
-   
    initialize
    printreverseorder
+   echo "print 50 alternative primes in reverse order"
+   print50primes
    }
+
    main
