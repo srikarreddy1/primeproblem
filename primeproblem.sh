@@ -12,7 +12,11 @@
        done
        if [[ $flag -eq 0 ]]
        then
+         if [[ $count != 100 ]]
+         then
            savetoarray
+         fi
+         checkunitsplace
        fi
        flag=0
        }
@@ -23,6 +27,8 @@
    }
    function initialize( ) {
     count=0
+    n=0
+    counter=0
     flag=0
     k=0
     i=2
@@ -39,6 +45,13 @@
    echo "${primesarray[$j]}"
    done
    }
+   function printreverseorderunits( ) {
+   for ((  j=99; j>=0; j-- ))
+   do
+   echo "${primesinunit[$j]}"
+   done
+   }
+
    #Print 50 alternate primes in reverse order
    function print50primes( ) {
    for (( m=99; m>=0; m=$(($m-2)) ))
@@ -51,6 +64,28 @@
    printreverseorder
    echo "print 50 alternative primes in reverse order"
    print50primes
+   initializeUnits
+   printreverseorderunits
    }
-
+    #print 100 primes with 1 in units place
+   
+   function checkunitsplace( ) {
+   digit=$(($number%10))
+   if [[ $digit -eq 1 ]]
+   then
+       savetounits
+   fi
+   }
+   function initializeUnits( ) {
+   while (( $counter != 100 ))
+   do
+   checkprime $i
+   i=$(($i+1))
+   done
+   }
+   function savetounits( ) {
+   primesinunit[$n]=$i
+   counter=$(($counter+1))
+   n=$(($n+1))
+   }
    main
