@@ -18,7 +18,7 @@
          fi
          checkunitsplace
          checkrange $1
-       
+         checkrange700to900 $1       
        fi
        flag=0
    }
@@ -45,7 +45,6 @@
    }
 
    function printreverseorder( ) {
-   
    for ((  j=99; j>=0; j-- ))
    do 
    echo "${primesarray[$j]}"
@@ -71,10 +70,13 @@
    printreverseorder
    echo "print 50 alternative primes in reverse order"
    print50primes
+   echo "print primes with 1 in units place"
    initializeUnits
    printreverseorderunits
    echo "print prime palanidromes between 1 to 200"
    printpalindromes
+   echo "print primes between 700 and 900 in reverse order"
+   printreverse
    }
 
     #print 100 primes with 1 in units place
@@ -135,9 +137,32 @@
    function printpalindromes( ) {
    #arraylength
    arraylength=`echo "${#palindrome[@]}"`
-   for (( i=0; i<=arraylength; i++))
+   for (( i=0; i<=arraylength; i++ ))
    do
    echo "${palindrome[$i]}"
    done
    }
+
+   #print primes between 700 to 900 in reverse order
+   
+   function checkrange700to900( ) {
+   if [ $1 -gt 700 -a $1 -lt 900 ]
+   then
+     savetoarray700 $1
+   fi
+   }
+
+   function savetoarray700( ) {
+   array700[$p]=$1
+   p=$(($p+1))
+   }
+
+   function printreverse( ) {
+   local arraylength=`echo "${#array700[@]}"`
+   for (( i=$(($arraylength-1)); i>=0; i-- ))
+   do
+   echo "${array700[$i]}"
+   done
+   }
+
    main
