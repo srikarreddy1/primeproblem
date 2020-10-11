@@ -17,9 +17,12 @@
            savetoarray
          fi
          checkunitsplace
+         checkrange $1
+       
        fi
        flag=0
-       }
+   }
+
    function savetoarray( ) {
    primesarray[$k]=$i
    count=$(($count+1))
@@ -31,13 +34,16 @@
     counter=0
     flag=0
     k=0
-    i=2
+    i=2  
+    f=0
+    p=0
     while (( $count != 100 ))
     do
     checkprime $i
     i=$((i+1))
     done
    }
+
    function printreverseorder( ) {
    
    for ((  j=99; j>=0; j-- ))
@@ -59,6 +65,7 @@
    echo "${primesarray[$m]}"
    done
    }
+
    function main( ) {
    initialize
    printreverseorder
@@ -66,7 +73,10 @@
    print50primes
    initializeUnits
    printreverseorderunits
+   echo "print prime palanidromes between 1 to 200"
+   printpalindromes
    }
+
     #print 100 primes with 1 in units place
    
    function checkunitsplace( ) {
@@ -76,6 +86,7 @@
        savetounits
    fi
    }
+
    function initializeUnits( ) {
    while (( $counter != 100 ))
    do
@@ -83,9 +94,50 @@
    i=$(($i+1))
    done
    }
+
    function savetounits( ) {
    primesinunit[$n]=$i
    counter=$(($counter+1))
    n=$(($n+1))
+   }
+   
+   #find palindromes between 1 to 200 that are primes
+
+   function checkrange( ) {
+   local number=$1
+   if [[ $number -lt 200 ]]
+   then
+   checkpalindrome $1
+   fi
+   }
+
+   function checkpalindrome( ) {
+   num=$1 
+   reversenumber=0
+   while (( $num != 0 ))
+   do
+   digit=$(( $num%10 ))
+
+   reversenumber=$((($reversenumber*10)+$digit))
+   num=$(( $num/10 ))
+   done
+   if [[ $reversenumber -eq $1 ]]
+   then
+      storethepalindrome $1
+   fi
+   }
+
+   function storethepalindrome( ) {
+   palindrome[$f]=$1
+   f=$(($f+1))
+   }
+
+   function printpalindromes( ) {
+   #arraylength
+   arraylength=`echo "${#palindrome[@]}"`
+   for (( i=0; i<=arraylength; i++))
+   do
+   echo "${palindrome[$i]}"
+   done
    }
    main
